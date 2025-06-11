@@ -33,10 +33,8 @@ class QueryResponse(BaseModel):
     agent_name: str
     tool_calls: Dict
 
-@app.get("/route", response_model=QueryResponse)
-def get_route(user_id: int, input: str):
-    return router(user_id, input)
 
-@app.post("/route", response_model=QueryResponse)
+@app.post("/route")
 def post_route(request: QueryRequest):
-    return router(request.input)
+    res = router(input=request.input, user_id=request.user_id)
+    return res
