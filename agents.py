@@ -380,7 +380,7 @@ def router(user_input: str, user_id: int) -> str:
         return {
             "response": response,
             "source_agent_response": source_agent_response,
-            "agent_workflow": [{"agent_name": "Knowledge Agent", "tool_calls": {"SQLSearchTool": "SQL Results", "SQLLabelExtractorTool": "SQL Labels"}}]
+            "agent_workflow": [{"agent_name": "Customer Support Agent", "tool_calls": {"SQLSearchTool": "SQL Results", "SQLLabelExtractorTool": "SQL Labels"}}]
         }
     else:
         response = "Could not route the query. Please clarify."
