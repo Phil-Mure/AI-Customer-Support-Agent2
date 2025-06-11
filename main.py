@@ -35,7 +35,7 @@ class QueryResponse(BaseModel):
 
 @app.get("/route", response_model=QueryResponse)
 def get_route(user_id: int, input: str):
-    return router(input)
+    return router(user_id, input)
 
 @app.post("/route", response_model=QueryResponse)
 def post_route(request: QueryRequest):
