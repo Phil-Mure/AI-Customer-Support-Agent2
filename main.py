@@ -36,5 +36,5 @@ class QueryResponse(BaseModel):
 
 @app.post("/route")
 def post_route(request: QueryRequest):
-    res = router(input=request.input, user_id=request.user_id)
+    res = router(user_input=request.input, user_id=request.user_id)
     return res
