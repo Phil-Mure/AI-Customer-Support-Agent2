@@ -288,7 +288,8 @@ def KnowledgeAgent(input_message: str) -> str:
         ):
         message = step["messages"][-1].pretty_print()
         x.append(message)
-        res = x[0] if x[0] != "None"
+        res = x[0]
+        print(res)
     return res
     
 # --- Creating DB Agent ---
@@ -374,7 +375,7 @@ def router(user_input: str, user_id: int) -> str:
         return {
             "response": response,
             "source_agent_response": source_agent_response,
-            "agent_workflow": [{"agent_name": "Knowledge Agent", "tool_calls": {"WebSearchTool": "None"}}]
+            "agent_workflow": [{"agent_name": "Knowledge Agent", "tool_calls": {"WebSearchTool": web_search_tool(user_input)}}]
         }
     elif decision == "B":
         source_agent_response = CustomerAgent(user_input, user_id)
