@@ -1,0 +1,14 @@
+version: '3.9'
+
+services:
+  app:
+    build: .
+    container_name: langchain-app
+    ports:
+      - "8000:8000"
+    volumes:
+      - .:/app
+      - ./transactions.db:/app/transactions.db  # Mount the SQLite DB
+    env_file:
+      - .env
+    command: uvicorn main:app --host 0.0.0.0 --port 8000 --reload
