@@ -38,8 +38,8 @@ llm = init_chat_model("gemini-2.0-flash", model_provider="google_genai")
 embeddings = GoogleGenerativeAIEmbeddings(model="models/embedding-001")
 
 # --- LangSmith Tracing ---
-os.environ["LANGSMITH_TRACING"] = "true"
-os.environ["LANGSMITH_API_KEY"] = os.getenv("LANGSMITH_API_KEY")
+# os.environ["LANGSMITH_TRACING"] = "true"
+# os.environ["LANGSMITH_API_KEY"] = os.getenv("LANGSMITH_API_KEY")
 
 # --- Getting the DB ---
 db = SQLDatabase.from_uri("sqlite:///cardTransactions.db")
@@ -264,28 +264,47 @@ graph = graph_builder.compile(checkpointer=memory)
 # Specify an ID for the thread
 config = {"configurable": {"thread_id": "abc123"}}
 
+from langgraph.prebuilt import create_react_agent
 
 # ---This is the Knowledge Agent that will respond to user queries related to knowledge 
 # and general purpose websearch.---
 def KnowledgeAgent(input_message: str) -> str: 
     """Knowledge Agent that responds to user queries."""
-    res = "What are the different payment methods?"
-    x = []
-    if classify_user_input_with_labels(input_message, labels) == "No Text Found":
-        # If no label is found, use the web search tool
-        response = web_search_tool.invoke(input_message)
-        res = response
-        
-    # If a label is found, use the Knowledge Agent
-    print(f"Knowledge Agent is processing the query: {input_message}")
-    # Stream the graph with the input message
-    # and return the last message
-    # Note: The graph will use the memory saver to save the state of the conversation
-    for step in graph.stream(
+
+    res = []
+    agent_executor = create_react_agent(llm, [retrieve], checkpointer=memory)
+        config = {"configurable": {"thread_id": "def234"}}
+    
+    input_message = (
+        "What is the standard method for Task Decomposition?\n\n"
+        "Once you get the answer, look up common extensions of that method."
+    )
+    
+    for event in agent_executor.stream(
         {"messages": [{"role": "user", "content": input_message}]},
         stream_mode="values",
         config=config,
-        ):
+    ):
+        res.append(event["messages"][-1].pretty_print())
+    return res[0]
+    
+    # res = "What are the different payment methods?"
+    # x = []
+    # if classify_user_input_with_labels(input_message, labels) == "No Text Found":
+    #     # If no label is found, use the web search tool
+    #     response = web_search_tool.invoke(input_message)
+    #     res = response
+        
+    # # If a label is found, use the Knowledge Agent
+    # print(f"Knowledge Agent is processing the query: {input_message}")
+    # # Stream the graph with the input message
+    # # and return the last message
+    # # Note: The graph will use the memory saver to save the state of the conversation
+    # for step in graph.stream(
+    #     {"messages": [{"role": "user", "content": input_message}]},
+    #     stream_mode="values",
+    #     config=config,
+    #     ):
         message = step["messages"][-1].pretty_print()
         x.append(message)
         print(x)
