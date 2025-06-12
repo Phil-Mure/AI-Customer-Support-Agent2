@@ -288,7 +288,8 @@ def KnowledgeAgent(input_message: str) -> str:
         ):
         message = step["messages"][-1].pretty_print()
         x.append(message)
-        res = x[0]
+        print(x)
+        res = x[0] if res != "None" else res
         print(res)
     return res
     
