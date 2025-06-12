@@ -275,17 +275,13 @@ def KnowledgeAgent(input_message: str) -> str:
     agent_executor = create_react_agent(llm, [retrieve], checkpointer=memory)
     config = {"configurable": {"thread_id": "def234"}}
     
-    input_message = (
-        "What is the standard method for Task Decomposition?\n\n"
-        "Once you get the answer, look up common extensions of that method."
-    )
-    
     for event in agent_executor.stream(
         {"messages": [{"role": "user", "content": input_message}]},
         stream_mode="values",
         config=config,
     ):
         res.append(event["messages"][-1].pretty_print())
+        print(res)
     return res[0]
     
     # res = "What are the different payment methods?"
