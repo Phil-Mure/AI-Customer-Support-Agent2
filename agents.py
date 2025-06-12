@@ -273,7 +273,7 @@ def KnowledgeAgent(input_message: str) -> str:
 
     res = []
     agent_executor = create_react_agent(llm, [retrieve], checkpointer=memory)
-        config = {"configurable": {"thread_id": "def234"}}
+    config = {"configurable": {"thread_id": "def234"}}
     
     input_message = (
         "What is the standard method for Task Decomposition?\n\n"
