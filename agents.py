@@ -269,25 +269,27 @@ config = {"configurable": {"thread_id": "abc123"}}
 # and general purpose websearch.---
 def KnowledgeAgent(input_message: str) -> str: 
     """Knowledge Agent that responds to user queries."""
-
+    res = "What are the different payment methods?"
+    x = []
     if classify_user_input_with_labels(input_message, labels) == "No Text Found":
         # If no label is found, use the web search tool
         response = web_search_tool.invoke(input_message)
-        return response
-    
-    else:
-        # If a label is found, use the Knowledge Agent
-        print(f"Knowledge Agent is processing the query: {input_message}")
-        # Stream the graph with the input message
-        # and return the last message
-        # Note: The graph will use the memory saver to save the state of the conversation
-        for step in graph.stream(
-            {"messages": [{"role": "user", "content": input_message}]},
-            stream_mode="values",
-            config=config,
+        res = response
+        
+    # If a label is found, use the Knowledge Agent
+    print(f"Knowledge Agent is processing the query: {input_message}")
+    # Stream the graph with the input message
+    # and return the last message
+    # Note: The graph will use the memory saver to save the state of the conversation
+    for step in graph.stream(
+        {"messages": [{"role": "user", "content": input_message}]},
+        stream_mode="values",
+        config=config,
         ):
-            message = step["messages"][-1].pretty_print()
-        return message
+        message = step["messages"][-1].pretty_print()
+        x.append(message)
+        res = x[0] if x[0] != "None"
+    return res
     
 # --- Creating DB Agent ---
 agent_executor = create_sql_agent(llm, db=db, agent_type="openai-tools", verbose=True)
