@@ -12,11 +12,11 @@ from agents import router
 app = FastAPI(
     title="Customer Support AI Agent API", 
     description="""Routes user input to Knowledge or Customer Agent using LangChain, LangGraph, OpenAI 
-                    and Google Gemini. The Knowledge Agent provides information based on indexed web 
-                    content from support pages and FQAs. It searches the web if no information is found on the pages.
-                    the Customer Agent handles account-related queries using an SQL database. The API uses a router to determine 
-                    which Agent to invoke based on user input. The user_id should an integer 
-                    from 1 to 100.
+                    and Google Gemini. The Knowledge Agent provides information based on indexed web content from support pages and FQAs. 
+                    It searches the web if no information is found on the pages. The Customer Agent handles account-related queries using 
+                    an SQL database. The API uses a router to determine which Agent to invoke based on user input. The final layer is the 
+                    Personality layer (workfow) that helps to make it more like a human being responding. The user_id should be an 
+                    integer from 1 to 100.
                 """, 
     version="1.0"
     )
@@ -25,14 +25,6 @@ app = FastAPI(
 class QueryRequest(BaseModel):
     user_id: int
     input: str
-
-class QueryResponse(BaseModel):
-    response: str
-    source_agent_response: str
-    agent_workflow: List
-    agent_name: str
-    tool_calls: Dict
-
 
 @app.post("/route")
 def post_route(request: QueryRequest):
