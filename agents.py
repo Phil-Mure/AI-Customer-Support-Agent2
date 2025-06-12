@@ -305,12 +305,12 @@ def KnowledgeAgent(input_message: str) -> str:
     #     stream_mode="values",
     #     config=config,
     #     ):
-        message = step["messages"][-1].pretty_print()
-        x.append(message)
-        print(x)
-        res = x[0] if res != "None" else res
-        print(res)
-    return res
+        # message = step["messages"][-1].pretty_print()
+        # x.append(message)
+        # print(x)
+        # res = x[0] if res != "None" else res
+        # print(res)
+    # return res
     
 # --- Creating DB Agent ---
 agent_executor = create_sql_agent(llm, db=db, agent_type="openai-tools", verbose=True)
