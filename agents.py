@@ -1,4 +1,4 @@
-import os
+7import os
 import bs4
 from langchain.chat_models import init_chat_model
 from langchain_google_genai import GoogleGenerativeAIEmbeddings
@@ -268,45 +268,14 @@ from langgraph.prebuilt import create_react_agent
 
 # ---This is the Knowledge Agent that will respond to user queries related to knowledge 
 # and general purpose websearch.---
-def KnowledgeAgent(input_message: str) -> str: 
-    """Knowledge Agent that responds to user queries."""
 
-    res = []
-    agent_executor = create_react_agent(llm, [retrieve], checkpointer=memory)
-    config = {"configurable": {"thread_id": "def234"}}
-    
-    for event in agent_executor.stream(
-        {"messages": [{"role": "user", "content": input_message}]},
-        stream_mode="values",
+def KnowledgeAgent(input_message: str) -> str:
+    """Knowledge Agent that responds to user queries."""
+    x = list(graph.stream({"messages": [{"role": "user", "content": input_message}]},        stream_mode="values",
         config=config,
-    ):
-        res.append(event["messages"][-1].pretty_print())
-        print(res)
-    return res[0]
-    
-    # res = "What are the different payment methods?"
-    # x = []
-    # if classify_user_input_with_labels(input_message, labels) == "No Text Found":
-    #     # If no label is found, use the web search tool
-    #     response = web_search_tool.invoke(input_message)
-    #     res = response
-        
-    # # If a label is found, use the Knowledge Agent
-    # print(f"Knowledge Agent is processing the query: {input_message}")
-    # # Stream the graph with the input message
-    # # and return the last message
-    # # Note: The graph will use the memory saver to save the state of the conversation
-    # for step in graph.stream(
-    #     {"messages": [{"role": "user", "content": input_message}]},
-    #     stream_mode="values",
-    #     config=config,
-    #     ):
-        # message = step["messages"][-1].pretty_print()
-        # x.append(message)
-        # print(x)
-        # res = x[0] if res != "None" else res
-        # print(res)
-    # return res
+    ))[-1]["messages"][-1].content
+    print(x)
+    return x
     
 # --- Creating DB Agent ---
 agent_executor = create_sql_agent(llm, db=db, agent_type="openai-tools", verbose=True)
@@ -341,6 +310,8 @@ def PersonalityLayer(input_message: str) -> str:
         - Explain things clearly
         - Use natural language
         - Be concise but friendly
+        - Use three sentences maximum
+        - Format these sentences nicely 
 
         Here’s the question:
         {input}
@@ -386,11 +357,10 @@ def router(user_input: str, user_id: int) -> str:
     })
 
     if decision == "A":
-        source_agent_response = KnowledgeAgent(user_input)
-        response = PersonalityLayer(source_agent_response)
+        
         return {
-            "response": response,
-            "source_agent_response": source_agent_response,
+            "response": PersonalityLayer(KnowledgeAgent(user_input)),
+            "source_agent_response": KnowledgeAgent(user_input),
             "agent_workflow": [{"agent_name": "Knowledge Agent", "tool_calls": {"WebSearchTool": web_search_tool(user_input)}}]
         }
     elif decision == "B":
