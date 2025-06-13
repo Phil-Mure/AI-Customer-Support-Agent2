@@ -16,7 +16,7 @@ app = FastAPI(
                     It searches the web if no information is found on the pages. The Customer Agent handles account-related queries using 
                     an SQL database. The API uses a router to determine which Agent to invoke based on user input. The final layer is the 
                     Personality layer (workfow) that helps to make it more like a human being responding. The user_id should be an 
-                    integer from 1 to 100.
+                    integer from 1 to 100. For Knowledge Agent, try asking "What are the available payments methods?". For Customer Agent, try asking "What are the total number of transactions in my account?" or "I want the names of all merchants in my account".
                 """, 
     version="1.0"
     )
