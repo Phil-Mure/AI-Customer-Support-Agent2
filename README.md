@@ -24,12 +24,12 @@ This is a FastAPI-based AI backend that uses **LangChain** and **Google Gemini**
 .
 ├── agents.py                # LangChain, Gemini and Pandas logic
 ├── main.py                  # FastAPI app logic
-├── transactions.db          # Sample SQLite database
+├── cardTransactions.db      # Sample SQLite database
 ├── requirements.txt         # Python dependencies
 ├── Dockerfile               # Container build config
 ├── docker-compose.yml       # Multi-container setup
 ├── .env                     # Environment variables
-├── tests.py                 # Pytest tests for endpoint
+├── test_main.py             # Pytest tests for endpoint
 └── README.md                # You're reading this
 ```
 
@@ -40,8 +40,8 @@ This is a FastAPI-based AI backend that uses **LangChain** and **Google Gemini**
 ### 1. Clone the Repository
 
 ```bash
-git clone https://github.com/yourusername/langchain-fintech-api.git
-cd langchain-fintech-api
+git clone https://github.com/Phil-Mure/AI-Customer-Support-Agent2.git
+cd AI-Customer-Support-Agent2
 ```
 
 ### 2. Set Up Environment Variables
@@ -98,7 +98,7 @@ docker-compose up --build
 Run unit tests using:
 
 ```bash
-pytest tests.py
+pytest test_main.py
 ```
 
 ---
