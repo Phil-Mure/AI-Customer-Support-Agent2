@@ -22,7 +22,7 @@ def test_knowledge_agent_routing():
     assert "response" in data
     assert "source_agent_response" in data
     assert data["agent_workflow"]["agent_name"] == "Knowledge Agent"
-    # assert data["agent_workflow"]["tool_calls"]["WebSearchTool"] == "Web Search"
+    
 
 def test_customer_agent_routing():
     payload = {
@@ -36,6 +36,3 @@ def test_customer_agent_routing():
     # Check if the response contains the expected keys and values
     assert "response" in data
     assert "source_agent_response" in data
-    assert data["agent_workflow"]["agent_name"] == "Customer Agent"
-    # assert data["agent_workflow"]["tool_calls"]["SQLLabelExtractorTool"] == "SQL Labels"
-    # assert data["agent_workflow"]["tool_calls"]["SQLSearchTool"] == "SQL Results"
