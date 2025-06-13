@@ -38,8 +38,8 @@ llm = init_chat_model("gemini-2.0-flash", model_provider="google_genai")
 embeddings = GoogleGenerativeAIEmbeddings(model="models/embedding-001")
 
 # --- LangSmith Tracing ---
-# os.environ["LANGSMITH_TRACING"] = "true"
-# os.environ["LANGSMITH_API_KEY"] = os.getenv("LANGSMITH_API_KEY")
+os.environ["LANGSMITH_TRACING"] = "true"
+os.environ["LANGSMITH_API_KEY"] = os.getenv("LANGSMITH_API_KEY")
 
 # --- Getting the DB ---
 db = SQLDatabase.from_uri("sqlite:///cardTransactions.db")
