@@ -370,7 +370,7 @@ def router(user_input: str, user_id: int) -> str:
         return {
             "response": response,
             "source_agent_response": source_agent_response,
-            "agent_workflow": [{"agent_name": "Customer Support Agent", "tool_calls": {"SQLSearchTool": "SQL Results", "SQLLabelExtractorTool": user_labels}}]
+            "agent_workflow": [{"agent_name": "Customer Agent", "tool_calls": {"SQLSearchTool": "SQL Results", "SQLLabelExtractorTool": user_labels}}]
         }
     else:
         response = "Could not route the query, please clarify. It may contain explicit content or be outside the scope of our agents."
