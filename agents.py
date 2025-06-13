@@ -290,7 +290,7 @@ def CustomerAgent(input_message: str, user_id: int) -> str:
 # --- User Labels for Classification ---
 user_labels = [
     "transaction inquiry", "dispute charge", "payment failed", "refund request", 
-    "number of successful transactions", "mernchert support", "account balance",
+    "number of successful transactions", "merchants", "account balance",
     "transaction history", "transaction details", "transaction status",
     "transaction date", "transaction amount", "transaction type", "transaction method",
     "transaction location", "transaction merchant", "transaction description",
@@ -310,8 +310,9 @@ def PersonalityLayer(input_message: str) -> str:
         - Explain things clearly
         - Use natural language
         - Be concise but friendly
-        - Use three sentences maximum
-        - Format these sentences nicely 
+        - Use five sentences maximum
+        - Format these sentences nicely
+        - Provide all requested details and avoid making summaries
 
         Here’s the question:
         {input}
