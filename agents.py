@@ -144,6 +144,24 @@ def web_search_tool(query: str) -> str:
     """Search the web for recent information using DuckDuckGo."""    
     return search.invoke(query)
 
+#Summarise Websearch Results 
+def summarize_websearch_results(user_input: str) -> str:
+    prompt = PromptTemplate.from_template("""
+    You are an AI assistant helping summarize web search results, 
+    the {user_input}.
+
+    - Only three sentences maximum     
+    - The first sentence should be "Please provide more context because this 
+      question appears not to be related to the company's 
+      products or services and I will just proceed with a general web search."
+    - Detect language and make sure to make necessary translations based on provided language 
+      and return the answer in the original language.
+
+    """)
+
+    chain = prompt | llm
+    return chain.invoke({"user_input": user_input})
+
 # --- Classfy (match) user input with label. This will help determine whether to go ahead with 
 # the Knowledge Agent or do the general purpose web seacrh ---
 def classify_user_input_with_labels(user_input: str, labels: list[str]) -> str:
@@ -266,16 +284,24 @@ config = {"configurable": {"thread_id": "abc123"}}
 
 from langgraph.prebuilt import create_react_agent
 
+
+
 # ---This is the Knowledge Agent that will respond to user queries related to knowledge 
 # and general purpose websearch.---
 
 def KnowledgeAgent(input_message: str) -> str:
-    """Knowledge Agent that responds to user queries."""
-    x = list(graph.stream({"messages": [{"role": "user", "content": input_message}]},        stream_mode="values",
-        config=config,
-    ))[-1]["messages"][-1].content
-    print(x)
-    return x
+    res = ""
+    if classify_user_input_with_labels(labels, input_message) == "No Text Found":
+        res += summarize_websearch_results(summarize_websearch_results(input_message)).content 
+    
+    else:
+        res += list(graph.stream({"messages": [{"role": "user", "content": input_message}]}, stream_mode="values",
+            config=config,
+        ))[-1]["messages"][-1].content
+    print(res)
+    return res
+
+
     
 # --- Creating DB Agent ---
 agent_executor = create_sql_agent(llm, db=db, agent_type="openai-tools", verbose=True)
