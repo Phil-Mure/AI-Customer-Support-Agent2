@@ -162,6 +162,19 @@ def summarize_websearch_results(user_input: str) -> str:
     chain = prompt | llm
     return chain.invoke({"user_input": user_input})
 
+
+
+chatbot_greetings = [
+    "hi", "hello", "hey", "good morning", "good afternoon", "good evening",
+    "yo", "what's up", "hey there", "hello there", "hiya", "howdy",
+    "hi bot", "hello bot", "is anyone there?", "are you there?",
+    "can you help me?", "i need help", "can we talk?", "help please",
+    "start chat", "start conversation", "talk to agent", "need assistance"
+]
+
+labels = labels + chatbot_greetings
+
+
 # --- Classfy (match) user input with label. This will help determine whether to go ahead with 
 # the Knowledge Agent or do the general purpose web seacrh ---
 def classify_user_input_with_labels(user_input: str, labels: list[str]) -> str:
