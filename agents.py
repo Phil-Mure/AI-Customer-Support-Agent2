@@ -339,6 +339,7 @@ def PersonalityLayer(input_message: str) -> str:
         - Use five sentences maximum
         - Format these sentences nicely
         - Provide all requested details and avoid making summaries
+        - Provide answer as a single paragraph
 
         Here’s the question:
         {input}
