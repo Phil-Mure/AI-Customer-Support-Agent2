@@ -139,7 +139,6 @@ labels = extract_labels(all_splits[:5])
 
 search = DuckDuckGoSearchRun()
 
-@tool
 def web_search_tool(query: str) -> str:
     """Search the web for recent information using DuckDuckGo."""    
     return search.invoke(query)
