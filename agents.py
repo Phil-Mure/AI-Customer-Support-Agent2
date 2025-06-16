@@ -171,7 +171,7 @@ chatbot_greetings = [
     "start chat", "start conversation", "talk to agent", "need assistance"
 ]
 
-labels = labels + chatbot_greetings
+#labels = labels + chatbot_greetings
 
 
 # --- Classfy (match) user input with label. This will help determine whether to go ahead with 
@@ -302,12 +302,12 @@ from langgraph.prebuilt import create_react_agent
 # and general purpose websearch.---
 
 def KnowledgeAgent(input_message: str) -> str:
-    res = ""
-    if classify_user_input_with_labels(labels, input_message) == "No Text Found":
-        res += summarize_websearch_results(web_search_tool(input_message)).content 
+    #res = ""
+    #if classify_user_input_with_labels(labels, input_message) == "No Text Found":
+       # res += #summarize_websearch_results(web_search_tool(input_message)).content 
     
-    else:
-        res += list(graph.stream({"messages": [{"role": "user", "content": input_message}]}, stream_mode="values",
+    #else:
+    res = list(graph.stream({"messages": [{"role": "user", "content": input_message}]}, stream_mode="values",
             config=config,
         ))[-1]["messages"][-1].content
     print(res)
@@ -403,7 +403,7 @@ def router(user_input: str, user_id: int) -> str:
         return {
             "response": PersonalityLayer(KnowledgeAgent(user_input)),
             "source_agent_response": KnowledgeAgent(user_input),
-            "agent_workflow": [{"agent_name": "Knowledge Agent", "tool_calls": {"WebSearchTool": web_search_tool(user_input)}}]
+            "agent_workflow": [{"agent_name": "Knowledge Agent", "tool_calls": {"WebSearchTool": "None"}}]
         }
     elif decision == "B":
         source_agent_response = CustomerAgent(user_input, user_id)
