@@ -349,10 +349,12 @@ def PersonalityLayer(input_message: str) -> str:
         - Explain things clearly
         - Use natural language
         - Be concise but friendly
-        - Use five sentences maximum
+        - Use three sentences maximum
         - Format these sentences nicely
         - Provide all requested details and avoid making summaries
         - Provide answer as a single paragraph
+        - If it's a greeting, treat it as such 
+        - Don't mention anything about you being an AI Model
 
         Here’s the question:
         {input}
