@@ -422,7 +422,7 @@ def router(user_input: str, user_id: int) -> str:
         return {
             "response": PersonalityLayer(KnowledgeAgent(user_input)),
             "source_agent_response": KnowledgeAgent(user_input),
-            "agent_workflow": [{"agent_name": "Knowledge Agent", "tool_calls": {"WebSearchTool": "None"}}]
+            "agent_workflow": [{"agent_name": "Knowledge Agent", "tool_calls": {"WebSearchTool": web_search_tool(user_input)}}]
         }
     elif decision == "B":
         source_agent_response = CustomerAgent(user_input, user_id)
