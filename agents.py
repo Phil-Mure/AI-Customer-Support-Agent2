@@ -137,6 +137,8 @@ labels = extract_labels(all_splits[:5])
 # Here is a general purpose web search toool
 # --- Initialize DuckDuckGo search tool for general purpose websearch ---
 
+from langchain.agents import initialize_agent, AgentType
+
 search = DuckDuckGoSearchRun()
 
 #def web_search_tool(query: str) -> str:
@@ -190,7 +192,7 @@ chatbot_greetings = [
     "start chat", "start conversation", "talk to agent", "need assistance"
 ]
 
-#labels = labels + chatbot_greetings
+labels = labels + chatbot_greetings
 
 
 # --- Classfy (match) user input with label. This will help determine whether to go ahead with 
