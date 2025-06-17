@@ -159,7 +159,7 @@ def web_search_tool(query: str) -> str:
     )
 
     # Run a query
-    response = agent.run(query)
+    response = agent.invoke(query)
     print(response)
     return response
 
