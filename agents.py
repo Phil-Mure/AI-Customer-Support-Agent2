@@ -304,7 +304,7 @@ from langgraph.prebuilt import create_react_agent
 def KnowledgeAgent(input_message: str) -> str:
     #res = ""
    # if classify_user_input_with_labels(labels, input_message) == "No Text Found":
-        res += #summarize_websearch_results(web_search_tool(input_message)).content 
+        #res += summarize_websearch_results(web_search_tool(input_message)).content 
     
     #else:
     res = list(graph.stream({"messages": [{"role": "user", "content": input_message}]}, stream_mode="values",
