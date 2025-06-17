@@ -159,7 +159,7 @@ def web_search_tool(query: str) -> str:
     )
 
     # Run a query
-    response = agent.invoke(query)
+    response = agent.invoke(query)["output"]
     print(response)
     return response
 
@@ -325,7 +325,7 @@ from langgraph.prebuilt import create_react_agent
 def KnowledgeAgent(input_message: str) -> str:
     res = ""
     if classify_user_input_with_labels(labels, input_message) == "No Text Found":
-        res += web_search_tool(input_message).content 
+        res += web_search_tool(input_message)
     
     else:
         res += list(graph.stream({"messages": [{"role": "user", "content": input_message}]}, stream_mode="values",
