@@ -139,9 +139,28 @@ labels = extract_labels(all_splits[:5])
 
 search = DuckDuckGoSearchRun()
 
+#def web_search_tool(query: str) -> str:
+    #"""Search the web for recent information using #DuckDuckGo."""    
+    #return search.invoke(query)
+
+
 def web_search_tool(query: str) -> str:
-    """Search the web for recent information using DuckDuckGo."""    
-    return search.invoke(query)
+    # Define the toolset
+    tools = [search]
+
+    # Initialize the agent with the tools
+    agent = initialize_agent(
+        tools=tools,
+        llm=llm,
+        agent=AgentType.ZERO_SHOT_REACT_DESCRIPTION,
+        verbose=True,
+    )
+
+    # Run a query
+    response = agent.run(query)
+    print(response)
+    return response
+
 
 #Summarise Websearch Results 
 def summarize_websearch_results(user_input: str) -> str:
@@ -302,12 +321,12 @@ from langgraph.prebuilt import create_react_agent
 # and general purpose websearch.---
 
 def KnowledgeAgent(input_message: str) -> str:
-    #res = ""
-   # if classify_user_input_with_labels(labels, input_message) == "No Text Found":
-        #res += summarize_websearch_results(web_search_tool(input_message)).content 
+    res = ""
+    if classify_user_input_with_labels(labels, input_message) == "No Text Found":
+        res += web_search_tool(input_message).content 
     
-    #else:
-    res = list(graph.stream({"messages": [{"role": "user", "content": input_message}]}, stream_mode="values",
+    else:
+        res += list(graph.stream({"messages": [{"role": "user", "content": input_message}]}, stream_mode="values",
             config=config,
         ))[-1]["messages"][-1].content
     print(res)
