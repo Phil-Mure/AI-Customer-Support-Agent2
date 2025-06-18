@@ -170,7 +170,7 @@ This is a list of **Support Topics** or **FAQ** extracted from the indexed docum
 
 ## 📃 License
 
-MIT License — **not** free to use and modify.
+MIT License — **NOT** free to use and modify.
 
 ---
 
