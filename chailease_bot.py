@@ -1,3 +1,6 @@
+#create a virtual environment with python3 -m venv .venv and activate with source .venv/bin/activate
+# pip install -qU "langchain[google-genai]" langchain-openai langchain-core langgraph langchain-community beautifulsoup4 faiss-cpu pymysql sqlalchemy selenium pandas dotenv pymysql sqlalchemy mysql-connector-python playwright && playwright install
+
 from ai import login, fill_submission_form, fill_application_form, fill_working_info_form, skip_guarantor_page, fill_reference_contact_form, fill_product_info_form, fill_dealer_and_tenure_fields
 import faiss
 import bs4
@@ -26,6 +29,10 @@ import os
 from langchain.chat_models import init_chat_model
 import time
 import requests
+
+from dotenv import load_dotenv
+
+load_dotenv()
 
 os.environ["GOOGLE_API_KEY"] = os.environ.get("GOOGLE_API_KEY")
 os.environ["LANGSMITH_TRACING"] = "true"
