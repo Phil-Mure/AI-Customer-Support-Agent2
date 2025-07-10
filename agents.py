@@ -323,15 +323,18 @@ from langgraph.prebuilt import create_react_agent
 # and general purpose websearch.---
 
 def KnowledgeAgent(input_message: str) -> str:
-    res = ""
-    if classify_user_input_with_labels(labels, input_message) == "No Text Found":
-        res += web_search_tool(input_message)
+    # res = ""
+    # if classify_user_input_with_labels(labels, input_message) == "No Text Found":
+    #     res += web_search_tool(input_message)
     
-    else:
-        res += list(graph.stream({"messages": [{"role": "user", "content": input_message}]}, stream_mode="values",
+    # else:
+    #     res += list(graph.stream({"messages": [{"role": "user", "content": input_message}]}, stream_mode="values",
+    #         config=config,
+    #     ))[-1]["messages"][-1].content
+    # print(res)
+    res = list(graph.stream({"messages": [{"role": "user", "content": input_message}]}, stream_mode="values",
             config=config,
         ))[-1]["messages"][-1].content
-    print(res)
     return res
 
 
@@ -424,7 +427,7 @@ def router(user_input: str, user_id: int) -> str:
         return {
             "response": PersonalityLayer(KnowledgeAgent(user_input)),
             "source_agent_response": KnowledgeAgent(user_input),
-            "agent_workflow": [{"agent_name": "Knowledge Agent", "tool_calls": {"WebSearchTool": web_search_tool(user_input)}}]
+            "agent_workflow": [{"agent_name": "Knowledge Agent", "tool_calls": {"WebSearchTool": None}}]
         }
     elif decision == "B":
         source_agent_response = CustomerAgent(user_input, user_id)
